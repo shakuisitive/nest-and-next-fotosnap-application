@@ -1,3 +1,4 @@
+import { LoginForm } from "@/components/auth/login-form";
 import { signUpPath } from "@/paths";
 import Link from "next/link";
 
@@ -15,6 +16,7 @@ export default function LoginPage() {
           >Create one here</Link>
         </p>
       </div>
+      <LoginForm />
     </div>
   </div>
 }
