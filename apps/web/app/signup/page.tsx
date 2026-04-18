@@ -1,3 +1,4 @@
+'use client'
 import { SignupForm } from "@/components/auth/signup-form";
 import { loginPath } from "@/paths";
 import Link from "next/link";
@@ -16,7 +17,7 @@ export default function SignupPage() {
           >Sign in here</Link>
         </p>
       </div>
-      <SignupForm />
+      <SignupForm onSubmit={async (data) => console.log(data)} />
     </div>
   </div>
 }
