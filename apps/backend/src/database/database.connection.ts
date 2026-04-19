@@ -1,0 +1,1 @@
+export const DATABASE_CONNETION = 'database_connection'
