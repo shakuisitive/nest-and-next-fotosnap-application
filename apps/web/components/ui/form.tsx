@@ -156,7 +156,30 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   );
 }
 
+function FormRootError({ className, ...props }: React.ComponentProps<"div">) {
+  const { formState } = useFormContext();
+  const message = formState.errors.root?.message;
+
+  if (!message) {
+    return null;
+  }
+
+  return (
+    <div
+      data-slot="form-root-error"
+      className={cn(
+        "bg-destructive/10 border border-destructive/20 text-destructive px-4 py-3 rounded-md text-sm",
+        className
+      )}
+      {...props}
+    >
+      {message}
+    </div>
+  );
+}
+
 export {
+  FormRootError,
   useFormField,
   Form,
   FormItem,

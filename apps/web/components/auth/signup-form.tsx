@@ -5,7 +5,7 @@ import { SignupFormData, signupSchema } from "@/lib/auth/schema"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormRootError } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
@@ -50,6 +50,7 @@ const SignupForm = ({ onSubmit }: SignupFormProps) => {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+            <FormRootError />
             <FormField control={form.control} name="name" render={({ field }) => (
               <FormItem>
                 <FormLabel>

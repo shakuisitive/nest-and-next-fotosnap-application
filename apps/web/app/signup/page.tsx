@@ -1,10 +1,32 @@
 'use client'
 import { SignupForm } from "@/components/auth/signup-form";
+import { authClient } from "@/lib/auth/client";
+import { SignupFormData } from "@/lib/auth/schema";
 import { loginPath } from "@/paths";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
-  return <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+  const router = useRouter()
+
+  const handleSignup = async (data: SignupFormData) => {
+    await authClient.signUp.email({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    })
+
+    await authClient.signIn.email({
+      email: data.email,
+      password: data.password
+    })
+
+    router.push("/")
+  }
+
+
+
+  return < div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8" >
     <div className="max-w-md w-full space-y-8">
       <div className="text-center">
         <h2 className="mt-6 text-3xl font-extrabold text-foreground">
@@ -17,7 +39,7 @@ export default function SignupPage() {
           >Sign in here</Link>
         </p>
       </div>
-      <SignupForm onSubmit={async (data) => console.log(data)} />
+      <SignupForm onSubmit={handleSignup} />
     </div>
-  </div>
+  </div >
 }

@@ -4,13 +4,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { LoginFormData, loginSchema } from "@/lib/auth/schema"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react"
-import { useForm } from "react-hook-form";
+import { useForm, UseFormSetError } from "react-hook-form";
 import { Button } from "../ui/button";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "../ui/form";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage, FormRootError } from "../ui/form";
 import { Input } from "../ui/input";
 
 type LoginFormProps = {
-  onSubmit: (data: LoginFormData) => Promise<void>
+  onSubmit: (data: LoginFormData, setError: UseFormSetError<LoginFormData>) => Promise<void>
 }
 
 const LoginForm = ({ onSubmit }: LoginFormProps) => {
@@ -28,7 +28,7 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
     setIsSubmitting(true);
 
     try {
-      await onSubmit(data)
+      await onSubmit(data, form.setError)
     } catch (error) {
       console.log("Login error:", error)
     } finally {
@@ -47,6 +47,7 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+            <FormRootError />
             <FormField control={form.control} name="email" render={({ field }) => (
               <FormItem>
                 <FormLabel>
